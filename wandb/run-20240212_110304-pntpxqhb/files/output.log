@@ -1,0 +1,77 @@
+[94m[INFO] Experiment folder: output_testing/pntpxqhb
+[96m[DEBUG] Setting lr: 0.001
+Sanity Checking DataLoader 0:   0%|                                                                                                               | 0/1 [00:00<?, ?it/s]
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:604: UserWarning: Checkpoint directory output_testing/pntpxqhb exists and is not empty.
+  rank_zero_warn(f"Checkpoint directory {dirpath} exists and is not empty.")
+  | Name  | Type                  | Params
+------------------------------------------------
+0 | model | CausalNormalizingFlow | 2.5 K
+------------------------------------------------
+2.5 K     Trainable params
+0         Non-trainable params
+2.5 K     Total params
+0.010     Total estimated model params size (MB)
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:224: PossibleUserWarning: The dataloader, val_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 8 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Traceback (most recent call last):
+  File "main.py", line 109, in <module>
+    trainer.fit(model, train_dataloaders=loaders[0], val_dataloaders=loaders[1])
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 603, in fit
+    call._call_and_handle_interrupt(
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/call.py", line 38, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 645, in _fit_impl
+    self._run(model, ckpt_path=self.ckpt_path)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1098, in _run
+    results = self._run_stage()
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1177, in _run_stage
+    self._run_train()
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1190, in _run_train
+    self._run_sanity_check()
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1262, in _run_sanity_check
+    val_loop.run()
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/loops/loop.py", line 199, in run
+    self.advance(*args, **kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/loops/dataloader/evaluation_loop.py", line 152, in advance
+    dl_outputs = self.epoch_loop.run(self._data_fetcher, dl_max_batches, kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/loops/loop.py", line 199, in run
+    self.advance(*args, **kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/loops/epoch/evaluation_epoch_loop.py", line 137, in advance
+    output = self._evaluation_step(**kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/loops/epoch/evaluation_epoch_loop.py", line 234, in _evaluation_step
+    output = self.trainer._call_strategy_hook(hook_name, *kwargs.values())
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1480, in _call_strategy_hook
+    output = fn(*args, **kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/strategies/strategy.py", line 390, in validation_step
+    return self.model.validation_step(*args, **kwargs)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py", line 273, in validation_step
+    loss_dict = self.predict(
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/torch/autograd/grad_mode.py", line 27, in decorate_context
+    return func(*args, **kwargs)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py", line 92, in predict
+    log_prob = self.model.log_prob(x, scaler=self.preparator.scaler_transform)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/modules/causal_nf.py", line 188, in log_prob
+    log_prob = n_flow.log_prob(x)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/distributions.py", line 114, in log_prob
+    z, ladj = self.transform.call_and_ladj(x)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/transforms.py", line 136, in call_and_ladj
+    x, ladj = t.call_and_ladj(x)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/transforms.py", line 136, in call_and_ladj
+    x, ladj = t.call_and_ladj(x)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/transforms.py", line 730, in call_and_ladj
+    y, ladj = self.meta(x).call_and_ladj(x)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/flows.py", line 350, in meta
+    phi = self.hyper(x)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/torch/nn/modules/container.py", line 204, in forward
+    input = module(input)
+  File "/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/georgivitanov/Desktop/Thesis/causal-flows/zuko/nn.py", line 139, in forward
+    return F.linear(x, self.mask * self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (2500x5 and 4x32)

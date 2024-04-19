@@ -1,0 +1,1 @@
+{"val": {"log_prob_true": NaN, "time_log_prob": 0.7097244262695312, "loss": 3.152617931365967, "log_prob": -3.152617931365967}, "epoch": 9, "_timestamp": 1707407043.006413, "train": {"loss": 3.546748399734497, "log_prob": -3.5482516288757324, "time_forward": 0.5954514145851135, "lr": 0.001}, "_runtime": 6.041461944580078, "_step": 9, "_wandb": {"runtime": 26}}

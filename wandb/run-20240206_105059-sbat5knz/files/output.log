@@ -1,0 +1,102 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:604: UserWarning: Checkpoint directory output_testing/sbat5knz exists and is not empty.
+  rank_zero_warn(f"Checkpoint directory {dirpath} exists and is not empty.")
+  | Name  | Type                  | Params
+------------------------------------------------
+0 | model | CausalNormalizingFlow | 2.4 K
+------------------------------------------------
+2.4 K     Trainable params
+0         Non-trainable params
+2.4 K     Total params
+0.010     Total estimated model params size (MB)
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:224: PossibleUserWarning: The dataloader, val_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 8 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+/Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py:488: RuntimeWarning: Mean of empty slice.
+  loss_ = np.absolute(jac_x[mask]).mean()
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/numpy/core/_methods.py:192: RuntimeWarning: invalid value encountered in divide
+  ret = ret.dtype.type(ret / rcount)
+/Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py:501: RuntimeWarning: Mean of empty slice.
+  loss_ = np.absolute(jac_u[mask]).mean()
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/callbacks/progress/base.py:249: UserWarning: The progress bar already tracks a metric with the name(s) 'loss' and `self.log('loss', ..., prog_bar=True)` will overwrite this value.  If this is undesired, change the name or override `get_metrics()` in the progress bar callback.
+  rank_zero_warn(
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:224: PossibleUserWarning: The dataloader, train_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 8 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1595: PossibleUserWarning: The number of training batches (5) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+  rank_zero_warn(
+[94m[INFO] Experiment folder: output_testing/sbat5knz
+[96m[DEBUG] Setting lr: 0.001
+Epoch 5:  83%|▊| 5/6 [00:00<00:00, 37.60it/s, loss=3.850, v_num=0, log_prob=-3.85, time_forward=0.585, loss_jacobian_x=nan.0, loss_jacobian_u=nan
+`Trainer.fit` stopped: `max_epochs=10` reached.
+Restoring states from the checkpoint path at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+Loaded model weights from checkpoint at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:488: PossibleUserWarning: Your `test_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test/predict dataloaders.
+  rank_zero_warn(
+/Users/georgivitanov/opt/anaconda3/envs/cnf/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:224: PossibleUserWarning: The dataloader, test_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 8 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+Epoch 9: 100%|█| 6/6 [00:00<00:00, 38.27it/s, loss=4.270, v_num=0, log_prob=-4.27, time_forward=0.665, loss_jacobian_x=nan.0, loss_jacobian_u=nan
+[94m[INFO] Testing train split
+Testing DataLoader 0:   0%|                                                                                                | 0/5 [00:00<?, ?it/s]> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+Restoring states from the checkpoint path at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+Loaded model weights from checkpoint at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████████| 5/5 [01:16<00:00, 15.27s/it]
+[94m[INFO] Testing val split
+Testing DataLoader 0:   0%|                                                                                                | 0/1 [00:00<?, ?it/s]> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+Restoring states from the checkpoint path at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+Loaded model weights from checkpoint at /Users/georgivitanov/Desktop/Thesis/causal-flows/output_testing/sbat5knz/last.ckpt
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:09<00:00,  9.68s/it]
+[94m[INFO] Testing test split
+Testing DataLoader 0:   0%|                                                                                                | 0/1 [00:00<?, ?it/s]> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(131)predict()
+-> pdb.set_trace()
+> /Users/georgivitanov/Desktop/Thesis/causal-flows/causal_nf/models/causal_nf.py(132)predict()
+-> x_int = self.model.intervene(
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.08s/it]
