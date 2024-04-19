@@ -1,0 +1,53 @@
+dataset:
+  base_version: 1
+  k_fold: 1
+  loss: default
+  name: fork
+  num_samples: 25000
+  root: ../Data
+  scale: default
+  sem_name: non-linear
+  shuffle_train: true
+  splits:
+  - 0.8
+  - 0.1
+  - 0.1
+device: cpu
+early_stopping:
+  activate: false
+  min_delta: 0.0
+  patience: 100
+  verbose: false
+model:
+  act: elu
+  adjacency: false
+  base_to_data: false
+  dim_inner:
+  - 32
+  - 32
+  init: None
+  layer_name: maf
+  name: causal_nf
+  num_layers: -1
+  plot: false
+optim:
+  base_lr: 1e-3
+  beta_1: 0.9
+  beta_2: 0.999
+  cooldown: 0
+  factor: 0.95
+  mode: min
+  momentum: 0.0
+  optimizer: adam
+  patience: 60
+  scheduler: plateau
+  weight_decay: 0.0
+root_dir: output_causal_nf/comparison_carefl
+seed: 246
+train:
+  batch_size: 4000
+  enable_progress_bar: false
+  inference_mode: false
+  max_epochs: 1000
+  max_time: 00:24:00:00
+  regularize: false

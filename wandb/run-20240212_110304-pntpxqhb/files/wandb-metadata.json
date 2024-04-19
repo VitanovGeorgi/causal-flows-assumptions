@@ -1,0 +1,49 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.8.18",
+    "heartbeatAt": "2024-02-12T10:03:05.612311",
+    "startedAt": "2024-02-12T10:03:04.800753",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--config_file",
+        "causal_nf/configs/causal_nf.yaml",
+        "--wandb_mode",
+        "run",
+        "--project",
+        "CAUSAL_NF"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/psanch21/causal-flows.git",
+        "commit": "c11af4754a2edd07569f99274ff26feb138bd5d7"
+    },
+    "email": "vitanovgeorgi.gv@gmail.com",
+    "root": "/Users/georgivitanov/Desktop/Thesis/causal-flows",
+    "host": "employee-dynamic-52-80.sb.dfki.de",
+    "username": "georgivitanov",
+    "executable": "/Users/georgivitanov/opt/anaconda3/envs/cnf/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2400,
+        "min": 2400,
+        "max": 2400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400,
+            "min": 2400,
+            "max": 2400
+        }
+    ],
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 12.535804748535156
+    },
+    "memory": {
+        "total": 16.0
+    }
+}
