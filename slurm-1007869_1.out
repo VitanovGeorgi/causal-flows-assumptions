@@ -1,0 +1,149 @@
+Job 1007870: Running on node(s) kersey
+Job 1007870: Started at 2024-04-22 15:11:55+0200
+Monitor this job here: http://monitoring.pegasus.kl.dfki.de/d/slurm-job-details/job-details?var-jobid=1007870&from=1713791515000
+srun: jobinfo: version v1.0.0
+Job 1007870: Running on node(s) kersey
+Job 1007870: Started at 2024-04-22 15:11:55+0200
+Monitor this job here: http://monitoring.pegasus.kl.dfki.de/d/slurm-job-details/job-details?var-jobid=1007870&from=1713791515000
+/opt/conda/bin:/home/gvitanov/.vscode-server/bin/1e790d77f81672c49be070e04474901747115651/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+[rank: 0] Global seed set to 423626
+tensor([[1., 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.]])
+[94m[INFO] [0] num_batchees: 5[0m
+[94m[INFO] [1] num_batchees: 1[0m
+[94m[INFO] [2] num_batchees: 1[0m
+MAF(
+  (transforms): ModuleList(
+    (0): MaskedAutoregressiveTransform(
+      (base): MonotonicAffineTransform()
+      (order): [0, 1, 2]
+      (hyper): MaskedMLP(
+        (0): MaskedLinear(in_features=3, out_features=32, bias=True)
+        (1): ELU(alpha=1.0)
+        (2): MaskedLinear(in_features=32, out_features=6, bias=True)
+      )
+    )
+  )
+  (base): DiagNormal(loc: torch.Size([3]), scale: torch.Size([3]))
+)
+scaler_transform StandardTransform(shift=tensor([0.0004, 0.0046, 0.0031]), scale=tensor([ 1.0023, 10.0732,  3.2259]))
+StandardScaler(
+		mu_=tensor([[0.0004, 0.0046, 0.0031]]), 
+		scale_=tensor([[ 1.0023, 10.0732,  3.2259]])
+)
+> /netscratch/gvitanov/causal-flows-assumptions/main.py(62)<module>()
+-> if not load_model:
+(Pdb) 
+Traceback (most recent call last):
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+[rank: 0] Global seed set to 423626
+tensor([[1.0000, 0.3333, 0.0000],
+        [0.3333, 1.0000, 0.0000],
+        [0.0000, 0.0000, 1.0000]])
+[94m[INFO] [0] num_batchees: 5[0m
+[94m[INFO] [1] num_batchees: 1[0m
+[94m[INFO] [2] num_batchees: 1[0m
+MAF(
+  (transforms): ModuleList(
+    (0): MaskedAutoregressiveTransform(
+      (base): MonotonicAffineTransform()
+      (order): [0, 1, 2]
+      (hyper): MaskedMLP(
+        (0): MaskedLinear(in_features=3, out_features=32, bias=True)
+        (1): ELU(alpha=1.0)
+        (2): MaskedLinear(in_features=32, out_features=6, bias=True)
+      )
+    )
+  )
+  (base): DiagNormal(loc: torch.Size([3]), scale: torch.Size([3]))
+)
+scaler_transform StandardTransform(shift=tensor([0.0004, 0.0045, 0.0031]), scale=tensor([1.0023, 9.7351, 3.1600]))
+StandardScaler(
+		mu_=tensor([[0.0004, 0.0045, 0.0031]]), 
+		scale_=tensor([[1.0023, 9.7351, 3.1600]])
+)
+> /netscratch/gvitanov/causal-flows-assumptions/main.py(62)<module>()
+-> if not load_model:
+(Pdb) 
+Traceback (most recent call last):
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+[rank: 0] Global seed set to 423626
+tensor([[1.0000, 0.6667, 0.0000],
+        [0.6667, 1.0000, 0.0000],
+        [0.0000, 0.0000, 1.0000]])
+[94m[INFO] [0] num_batchees: 5[0m
+[94m[INFO] [1] num_batchees: 1[0m
+[94m[INFO] [2] num_batchees: 1[0m
+MAF(
+  (transforms): ModuleList(
+    (0): MaskedAutoregressiveTransform(
+      (base): MonotonicAffineTransform()
+      (order): [0, 1, 2]
+      (hyper): MaskedMLP(
+        (0): MaskedLinear(in_features=3, out_features=32, bias=True)
+        (1): ELU(alpha=1.0)
+        (2): MaskedLinear(in_features=32, out_features=6, bias=True)
+      )
+    )
+  )
+  (base): DiagNormal(loc: torch.Size([3]), scale: torch.Size([3]))
+)
+scaler_transform StandardTransform(shift=tensor([0.0004, 0.0041, 0.0030]), scale=tensor([1.0023, 9.3847, 3.0927]))
+StandardScaler(
+		mu_=tensor([[0.0004, 0.0041, 0.0030]]), 
+		scale_=tensor([[1.0023, 9.3847, 3.0927]])
+)
+> /netscratch/gvitanov/causal-flows-assumptions/main.py(62)<module>()
+-> if not load_model:
+(Pdb) 
+Traceback (most recent call last):
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 62, in <module>
+    if not load_model:
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+[rank: 0] Global seed set to 423626
+tensor([[1., 1., 0.],
+        [1., 1., 0.],
+        [0., 0., 1.]])
+Traceback (most recent call last):
+  File "/netscratch/gvitanov/causal-flows-assumptions/causal_nf/distributions/scm.py", line 9, in __init__
+    super(SCM, self).__init__(base_distribution, transform, validate_args)
+  File "/netscratch/gvitanov/envs/cnf/lib/python3.9/site-packages/torch/distributions/transformed_distribution.py", line 57, in __init__
+    base_shape = base_distribution.batch_shape + base_distribution.event_shape
+AttributeError: 'NoneType' object has no attribute 'batch_shape'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/netscratch/gvitanov/causal-flows-assumptions/main.py", line 46, in <module>
+    preparator = SCMPreparator.loader(cfg.dataset)
+  File "/netscratch/gvitanov/causal-flows-assumptions/causal_nf/preparators/scm/scm_preparator.py", line 121, in loader
+    return cls(**my_dict)
+  File "/netscratch/gvitanov/causal-flows-assumptions/causal_nf/preparators/scm/scm_preparator.py", line 84, in __init__
+    self.scm = SCM(base_distribution=self.base_distribution, transform=sem)
+  File "/netscratch/gvitanov/causal-flows-assumptions/causal_nf/distributions/scm.py", line 11, in __init__
+    raise ValueError("Invalid SCM")
+ValueError: Invalid SCM
+srun: error: kersey: task 0: Exited with exit code 1
