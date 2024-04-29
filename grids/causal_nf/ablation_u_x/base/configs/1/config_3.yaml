@@ -4,7 +4,7 @@ dataset:
   correlations:
   - - 0
     - 1
-    - 0.6667
+    - 0.4
   k_fold: 1
   loss: default
   means:
@@ -24,7 +24,7 @@ dataset:
   - 0.8
   - 0.1
   - 0.1
-  steps: 3
+  steps: 5
   variances:
   - - 0
     - 1.0

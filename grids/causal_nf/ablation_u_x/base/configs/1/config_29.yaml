@@ -3,7 +3,7 @@ dataset:
   base_version: 0
   correlations:
   - - 0
-    - 1
+    - 2
     - 0.8
   k_fold: 1
   loss: default
@@ -62,7 +62,7 @@ optim:
   scheduler: plateau
   weight_decay: 0.0
 root_dir: output_causal_nf/ablation_u_x
-seed: 423626
+seed: 737
 train:
   batch_size: 4000
   enable_progress_bar: false

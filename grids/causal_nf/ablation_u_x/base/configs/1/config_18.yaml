@@ -2,9 +2,9 @@ dataset:
   base_distribution_name: multivariatenormal
   base_version: 0
   correlations:
-  - - 0
-    - 1
-    - 0.8
+  - - 1
+    - 2
+    - 1.0
   k_fold: 1
   loss: default
   means:

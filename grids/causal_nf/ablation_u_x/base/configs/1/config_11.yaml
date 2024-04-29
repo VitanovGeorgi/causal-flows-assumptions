@@ -3,7 +3,7 @@ dataset:
   base_version: 0
   correlations:
   - - 0
-    - 1
+    - 2
     - 0.8
   k_fold: 1
   loss: default

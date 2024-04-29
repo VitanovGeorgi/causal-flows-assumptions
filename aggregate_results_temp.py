@@ -8,6 +8,9 @@ import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+import itertools
 
 from typing import Tuple
 import ast
@@ -15,9 +18,12 @@ import ast
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--source", help="file path to experiments", default="output_causal_nf/aggregated_results/results__2024-04-16-08:08:25__bcad687afbb711ee8bab2ec714f19cc3")
-parser.add_argument("--target", help="output file path", default="output")
-parser.add_argument("--metric", help="output file path", default="mmd_obs")
+parser.add_argument(
+    "--source", help="file path to experiments", 
+    default="output_causal_nf/aggregated_results/chain4__2024-04-28-10:38:27__af44ce30053a11ef8f712ec714f19cc2"
+)
+parser.add_argument("--target", help="output file path", default="output_aggregated_results")
+parser.add_argument("--metric", help="output file path", default="log_prob")
 # keep in mind it'll be read as the default is, it's not there because we think it's better this way!
 parser.add_argument("--affected_var", help="which nodes are affected by correlation", default=["1", "2"], nargs="+") 
 
@@ -38,9 +44,10 @@ def unflatten_column_names(df: pd.DataFrame, sym: str = '__') -> pd.DataFrame:
             df.rename({name: unflattened_name}, axis=1, inplace=True)
     return df
 
-
 def cross_reference_variables_df(variables: list, df: pd.DataFrame) -> Tuple[list, pd.DataFrame]:
-    
+    '''Validates that the inputted df and the variables selected, correspond to each other.
+
+    '''
     assert len(variables) > 0, 'No variables were inserted'
     
     _variables = []
@@ -58,8 +65,7 @@ def cross_reference_variables_df(variables: list, df: pd.DataFrame) -> Tuple[lis
 
     return _variables, _df
 
-
-def separate_correlation_into_columns(row: pd.Series) -> pd.Series:
+def separate_correlation_into_columns(row: pd.Series, single_strength: bool = True) -> pd.Series:
     list_of_lists = ast.literal_eval(row)
     list_of_floats = []
     
@@ -70,10 +76,19 @@ def separate_correlation_into_columns(row: pd.Series) -> pd.Series:
     strengths = []
     for sublist in list_of_floats:
         correlations.append([int(sublist[0]), int(sublist[1])])
-        strengths.append(sublist[2])
-
+        if single_strength:
+            strengths = sublist[2]
+        else:
+            strengths.append(sublist[2])
+            
     return pd.Series([correlations, strengths])
 
+def filter_only_selected_vars(row: pd.Series, variables: list) -> pd.Series:
+    '''Filters the row to only include the variables that are selected
+    '''
+    if set(row['c'][0]) == set(variables):
+        return row
+    
 
 if __name__ == "__main__":
 
@@ -81,13 +96,12 @@ if __name__ == "__main__":
 
     cwd = os.getcwd()
     source_path = os.path.join(cwd, args.source)
+    target_path = os.path.join(cwd, args.target )
     metric = args.metric
 
     merged_df = pd.read_csv(source_path)
     # keep in mind that the way this file was saved, dataset__{} is still there, etc, so these will be removed
     merged_df = unflatten_column_names(merged_df)
-
-    merged_df['node_count'] = 3 # DELETE!
 
     vars = args.affected_var
 
@@ -95,44 +109,111 @@ if __name__ == "__main__":
 
     df[['c', 'p']] = df['correlations'].apply(separate_correlation_into_columns)
 
+    df_filtered = df.loc[df['c'].apply(lambda x: set(x[0]) == set(variables))]
+
     # pdb.set_trace()
-    split = 'val'
+    split = 'train'
     variable = 'mmd_int_x1=50p'
+    strength_values = df_filtered['p'].unique()
+
+    # pdb.set_trace()
+    assert metric in df_filtered.columns, f"{metric} is not in the columns of the dataframe"
+
 
     """
         What are we doing the avg over?
     """
-    elem1 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.0)][variable]
-    elem2 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.3333)][variable]
-    elem3 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.6667)][variable]
-    elem4 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 1.0)][variable]
 
-    elem1 = elem1.sum() / len(elem1)
-    elem2 = elem2.sum() / len(elem2)
-    elem3 = elem3.sum() / len(elem3)
-    elem4 = elem4.sum() / len(elem4)
+
+    # elem1 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.0)][variable]
+    # elem2 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.3333)][variable]
+    # elem3 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 0.6667)][variable]
+    # elem4 = merged_df.loc[(merged_df['split'] == split) & (merged_df['correlations'] == 1.0)][variable]
+
+    # elem1 = elem1.sum() / len(elem1)
+    # elem2 = elem2.sum() / len(elem2)
+    # elem3 = elem3.sum() / len(elem3)
+    # elem4 = elem4.sum() / len(elem4)
 
     """
-        'Unnamed: 0', 'current_epoch', 'epoch', 'kl_distance', 'log_prob',
+        array(['Unnamed: 0', 'current_epoch', 'epoch', 'kl_distance', 'log_prob',
        'log_prob_p', 'log_prob_true', 'loss', 'mmd_int_x1=25p',
-       'mmd_int_x1=50p', 'mmd_int_x1=75p', 'mmd_int_x2=25p', 'mmd_int_x2=50p',
-       'mmd_int_x2=75p', 'mmd_obs', 'mse_cf_x1=25p', 'mse_cf_x1=50p',
-       'mse_cf_x1=75p', 'mse_cf_x2=25p', 'mse_cf_x2=50p', 'mse_cf_x2=75p',
+       'mmd_int_x1=50p', 'mmd_int_x1=75p', 'mmd_int_x2=25p',
+       'mmd_int_x2=50p', 'mmd_int_x2=75p', 'mmd_int_x3=25p',
+       'mmd_int_x3=50p', 'mmd_int_x3=75p', 'mmd_obs', 'mse_cf_x1=25p',
+       'mse_cf_x1=50p', 'mse_cf_x1=75p', 'mse_cf_x2=25p', 'mse_cf_x2=50p',
+       'mse_cf_x2=75p', 'mse_cf_x3=25p', 'mse_cf_x3=50p', 'mse_cf_x3=75p',
        'rmse_ate_x1=25_50', 'rmse_ate_x1=25_75', 'rmse_ate_x1=50_75',
        'rmse_ate_x2=25_50', 'rmse_ate_x2=25_75', 'rmse_ate_x2=50_75',
-       'rmse_cf_x1=25p', 'rmse_cf_x1=50p', 'rmse_cf_x1=75p', 'rmse_cf_x2=25p',
-       'rmse_cf_x2=50p', 'rmse_cf_x2=75p', 'time_ate', 'time_cf',
-       'time_intervene', 'time_log_prob', 'time_sample_obs', 'timestamp',
-       'split', 'base_distribution_name', 'base_version', 'correlations',
-       'name', 'num_samples', 'sem_name', 'steps', 'seed'],
-      dtype='object')
+       'rmse_ate_x3=25_50', 'rmse_ate_x3=25_75', 'rmse_ate_x3=50_75',
+       'rmse_cf_x1=25p', 'rmse_cf_x1=50p', 'rmse_cf_x1=75p',
+       'rmse_cf_x2=25p', 'rmse_cf_x2=50p', 'rmse_cf_x2=75p',
+       'rmse_cf_x3=25p', 'rmse_cf_x3=50p', 'rmse_cf_x3=75p', 'time_ate',
+       'time_cf', 'time_intervene', 'time_log_prob', 'time_sample_obs',
+       'timestamp', 'split', 'add_noise', 'base_distribution_name',
+       'base_version', 'bernoulli_coef', 'correlations', 'k_fold',
+       'laplace_diversity', 'loss', 'means', 'multiple_distributions',
+       'name', 'num_samples', 'output_plot_metrics', 'root', 'scale',
+       'sem_name', 'shuffle_train', 'single_split', 'splits', 'steps',
+       'type', 'uniform_a', 'uniform_b', 'use_edge_attr', 'variances',
+       'device', 'activate', 'min_delta', 'patience', 'verbose',
+       'aggregators', 'dim_inner', 'eps', 'heads', 'num_layers',
+       'num_layers_post', 'num_layers_pre', 'post_layers', 'pre_layers',
+       'scalers', 'stage_type', 'towers', 'train_eps', 'aggregators',
+       'dim_inner', 'eps', 'heads', 'num_layers', 'num_layers_post',
+       'num_layers_pre', 'post_layers', 'pre_layers', 'scalers',
+       'stage_type', 'towers', 'train_eps', 'act', 'adjacency',
+       'base_distr', 'base_to_data', 'beta', 'dim_inner', 'distr_u',
+       'distr_x', 'dropout', 'has_bn', 'init', 'lambda_', 'latent_dim',
+       'layer_name', 'learn_base', 'name', 'net_name', 'num_layers',
+       'objective', 'parity', 'plot', 'scale', 'scale_base', 'shift_base',
+       'node_count', 'base_lr', 'beta_1', 'beta_2', 'cooldown', 'factor',
+       'gamma', 'mode', 'momentum', 'optimizer', 'patience', 'scheduler',
+       'step_size', 'weight_decay', 'param_count', 'root_dir', 'seed',
+       'auto_lr_find', 'auto_scale_batch_size', 'batch_size',
+       'enable_progress_bar', 'inference_mode', 'kl',
+       'limit_train_batches', 'limit_val_batches', 'max_epochs',
+       'max_time', 'model_checkpoint', 'num_workers', 'profiler',
+       'regularize', 'loss_jacobian_u', 'loss_jacobian_x', 'lr',
+       'time_forward', 'c', 'p'], dtype=object)
     """
     
-    plt.plot(
-        np.linspace(0, 1, 4), 
-        [elem1, elem2, elem3, elem4]
-    )
-    plt.savefig('plot_correlation.png')
+    # colors = iter(cm.rainbow(np.linspace(0, 1, len(df_filtered['num_samples'].unique()))))
+    markers = itertools.cycle(["o", "x", "s", "D", "^", "v", "<", ">", "p", "P", "*", "h", "H", "+", "X", "d"])
+    colors = itertools.cycle(["r", "b", "g", "c", "m", "y", "k"])
+    for num_samples in df_filtered['num_samples'].unique():
+        for seed in df_filtered['seed'].unique():
+            for split in df_filtered['split'].unique():
+                marker = next(markers)
+                color = next(colors)
+                plt.scatter(
+                    df_filtered.loc[
+                        (df_filtered['num_samples'] == num_samples) & 
+                        (df_filtered['seed'] == seed) &
+                        (df_filtered['split'] == split)
+                    ]['p'], 
+                    df_filtered.loc[
+                        (df_filtered['num_samples'] == num_samples) & 
+                        (df_filtered['seed'] == seed) &
+                        (df_filtered['split'] == split)
+                    ][metric], 
+                    color=color,
+                    marker=marker,
+                    label=f"samples: {num_samples}, seed: {seed}, split: {split}"
+                )
+                y = []
+                for p in sorted(df_filtered['p'].unique()):
+                    y.append(df_filtered.loc[(df_filtered['num_samples'] == num_samples) & (df_filtered['p'] == p) & (df_filtered['seed'] == seed)][metric].mean())
+                plt.plot(sorted(df_filtered['p'].unique()), y, color=color)
+                plt.xlabel('Correlation strength')
+                plt.ylabel(metric)
+    plt.title(f"SEM: {df_filtered['name'].iloc[0][0]}, metric: {metric}, affected variables: {variables}")
+
+    # plt.show()
+    plt.legend()
+    figure_name = os.path.join(target_path, f"metric_{metric}_affected_var_{variables[0]}_{variables[1]}.png")
+    # plt.savefig(figure_name)
+    plt.show()
     x = 0
 
 
