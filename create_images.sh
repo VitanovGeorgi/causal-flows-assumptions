@@ -19,8 +19,9 @@ for metric in "${arr[@]}"
  do
 
     python aggregate_results_temp.py \
+    --source=output_causal_nf/aggregated_results/chain5__2024-04-28-10:38:20__ab2a0482053a11ef88312ec714f19cc2 \
      --metric $metric \
-      --affected_var 1 2 
+      --affected_var 1 5 
 
 done
 

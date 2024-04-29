@@ -15,6 +15,8 @@ import itertools
 from typing import Tuple
 import ast
 
+import seaborn
+
 
 
 parser = argparse.ArgumentParser()
@@ -180,13 +182,18 @@ if __name__ == "__main__":
     
     # colors = iter(cm.rainbow(np.linspace(0, 1, len(df_filtered['num_samples'].unique()))))
     markers = itertools.cycle(["o", "x", "s", "D", "^", "v", "<", ">", "p", "P", "*", "h", "H", "+", "X", "d"])
-    colors = itertools.cycle(["r", "b", "g", "c", "m", "y", "k"])
-    for num_samples in df_filtered['num_samples'].unique():
+    colors = itertools.cycle(["r", "b", "g", "m", "y", "c", "k"])
+    marker_border = itertools.cycle(["r", "b", "g", "m", "y", "c", "k"])
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111)
+    for split in df_filtered['split'].unique():
+        marker = next(markers)
         for seed in df_filtered['seed'].unique():
-            for split in df_filtered['split'].unique():
-                marker = next(markers)
-                color = next(colors)
-                plt.scatter(
+            color = next(colors)
+            for num_samples in df_filtered['num_samples'].unique():
+                # print(num_samples)
+                marker_border_color = next(marker_border)
+                ax.scatter(
                     df_filtered.loc[
                         (df_filtered['num_samples'] == num_samples) & 
                         (df_filtered['seed'] == seed) &
@@ -199,21 +206,34 @@ if __name__ == "__main__":
                     ][metric], 
                     color=color,
                     marker=marker,
-                    label=f"samples: {num_samples}, seed: {seed}, split: {split}"
+                    label=f"samples: {num_samples}, seed: {seed}, split: {split}",
+                    edgecolors=marker_border_color
                 )
-                y = []
-                for p in sorted(df_filtered['p'].unique()):
-                    y.append(df_filtered.loc[(df_filtered['num_samples'] == num_samples) & (df_filtered['p'] == p) & (df_filtered['seed'] == seed)][metric].mean())
-                plt.plot(sorted(df_filtered['p'].unique()), y, color=color)
-                plt.xlabel('Correlation strength')
-                plt.ylabel(metric)
-    plt.title(f"SEM: {df_filtered['name'].iloc[0][0]}, metric: {metric}, affected variables: {variables}")
+        y = []
+        for p in sorted(df_filtered['p'].unique()):
+            y.append(df_filtered.loc[
+                # (df_filtered['num_samples'] == num_samples) & 
+                (df_filtered['p'] == p) & 
+                (df_filtered['split'] == split)
+            ][metric].mean())
+        ax.plot(sorted(df_filtered['p'].unique()), y, color=next(colors), label=f"split: {split}", linestyle='--')
+        ax.set_xlabel('Correlation strength')
+        ax.xaxis.tick_top()
+        ax.xaxis.set_label_position('top')
+        ax.set_ylabel(metric)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0 + box.height * 0.2, box.width, box.height * 0.8])
+    ax.set_title(
+        f"SEM: {df_filtered['name'].iloc[0][0]}, metric: {metric}, affected variables: {variables}", 
+        backgroundcolor='black', 
+        color='white'
+        )
 
     # plt.show()
-    plt.legend()
-    figure_name = os.path.join(target_path, f"metric_{metric}_affected_var_{variables[0]}_{variables[1]}.png")
-    # plt.savefig(figure_name)
-    plt.show()
+    ax.legend(prop={'size': 8}, bbox_to_anchor=(0.5, -0.05), loc='upper center', ncol=2)
+    figure_name = os.path.join(target_path, f"{df_filtered['name'].iloc[0][0]}_metric_{metric}_affected_var_{variables[0]}_{variables[1]}.png")
+    fig.savefig(figure_name, dpi=499)
+    # plt.show()
     x = 0
 
 
