@@ -24,7 +24,7 @@ dataset:
   - 0.8
   - 0.1
   - 0.1
-  steps: 3
+  steps: 5
   variances:
   - - 0
     - 1.0

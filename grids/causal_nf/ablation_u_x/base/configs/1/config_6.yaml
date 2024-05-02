@@ -4,7 +4,7 @@ dataset:
   correlations:
   - - 0
     - 1
-    - 0.3333
+    - 1.0
   k_fold: 1
   loss: default
   means:
@@ -24,7 +24,7 @@ dataset:
   - 0.8
   - 0.1
   - 0.1
-  steps: 3
+  steps: 5
   variances:
   - - 0
     - 1.0
@@ -62,7 +62,7 @@ optim:
   scheduler: plateau
   weight_decay: 0.0
 root_dir: output_causal_nf/ablation_u_x
-seed: 737
+seed: 423626
 train:
   batch_size: 4000
   enable_progress_bar: false

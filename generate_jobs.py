@@ -1,4 +1,7 @@
 import argparse
+from dotenv import load_dotenv
+import os
+from pathlib import Path
 
 from causal_nf.job_creator import job_creator_dict
 from causal_nf.job_creator.helper import *
@@ -6,6 +9,12 @@ from causal_nf.job_creator.helper import *
 import causal_nf.utils.io as causal_io
 
 import pdb
+
+
+dotenv_path = Path('causal-flows-assumptions/.env')
+load_dotenv()
+PATH_TO_CONDA = os.getenv('PATH_TO_CONDA')
+# PATH_TO_CONDA = "/netscratch/gvitanov/environments/cnf"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -69,7 +78,7 @@ if len(grid_file_extra_list) > 0:
         options.extend(options_i)
 else:
     options = generate_options(grid_flat=grid_flat, grid_file_extra=None)
-pdb.set_trace()
+# pdb.set_trace()
 grid_folder = os.path.splitext(args.grid_file)[0]
 
 causal_io.makedirs_rm_exist(grid_folder)
@@ -117,7 +126,7 @@ batch_job_id = 0
 # batch_main_str = os.path.join(scripts_folder, f"batch_{batch_job_id}.py")
 batch_main_str = os.path.join(scripts_folder, f"batch_{batch_job_id}.sh")
 # causal_io.str_to_file(f"import os", batch_main_str)
-pdb.set_trace()
+# pdb.set_trace()
 num_jobs = len(main_str_list)
 for main_str, folder_id, job_id in zip(main_str_list, folder_id_list, job_id_list):
     i += 1
@@ -125,7 +134,7 @@ for main_str, folder_id, job_id in zip(main_str_list, folder_id_list, job_id_lis
         job_creator.add_job(main_str, folder_id, job_id)
     else:
         # causal_io.str_to_file(f"os.system('python {main_str}')", batch_main_str)
-        causal_io.str_to_file(f"python {main_str}; \n", batch_main_str)
+        causal_io.str_to_file(f"{PATH_TO_CONDA}/bin/python {main_str}; \n", batch_main_str)
 
         if i % args.batch_size == 0 or i == num_jobs:
             job_creator.add_job(batch_main_str, folder_id, batch_job_id)

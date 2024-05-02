@@ -58,7 +58,7 @@ model = causal_nf_train.load_model(cfg=cfg, preparator=preparator)
 param_count = model.param_count()
 config["param_count"] = param_count
 config["node_count"] = model.model.adjacency.shape[0] 
-pdb.set_trace()
+# pdb.set_trace()
 if not load_model:
     assert isinstance(args.project, str)
     run = wandb.init(
