@@ -22,7 +22,7 @@ import seaborn
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--source", help="file path to experiments", 
-    default="output_causal_nf/aggregated_results/chain4__2024-04-28-10:38:27__af44ce30053a11ef8f712ec714f19cc2"
+    default="output_causal_nf/aggregated_results/results_chain"
 )
 parser.add_argument("--target", help="output file path", default="output_aggregated_results")
 parser.add_argument("--metric", help="output file path", default="log_prob")
@@ -111,10 +111,10 @@ if __name__ == "__main__":
 
     df[['c', 'p']] = df['correlations'].apply(separate_correlation_into_columns)
 
-    df_filtered = df.loc[df['c'].apply(lambda x: set(x[0]) == set(variables))]
+    df_filtered = df.loc[df['c'].apply(lambda x: set(x[0]) == set(variables)) & (df['base_version'] == 0)]
 
     # pdb.set_trace()
-    split = 'train'
+    split = 'test'
     variable = 'mmd_int_x1=50p'
     strength_values = df_filtered['p'].unique()
 

@@ -85,7 +85,12 @@ class CausalNFightning(BaseLightning):
         x = batch[0].to(self.device)
         n = x.shape[0]
         with torch.enable_grad():
-            output["log_prob_true"] = self.preparator.log_prob(x)
+            log_prob_true = self.preparator.log_prob(x)
+            output["log_prob_true"] = log_prob_true
+            print(f"log_prob_true: {log_prob_true.mean()} {log_prob_true.std()}")
+            print(f"x: {x.mean()} {x.std()}")
+            assert False
+
 
         tic = time.time()
         # log probs from the dist

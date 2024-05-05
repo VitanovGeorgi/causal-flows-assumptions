@@ -120,7 +120,8 @@ def create_multivariate_normal_dist(
     except:
         L_cholesky = torch.linalg.cholesky(torch.eye(no_nodes))
         return None
-
+    print(f"Cholesky: {L_cholesky}")
+    assert False
     return distr_dict[base_distribution_name.lower()](
             torch.zeros(no_nodes),
             scale_tril=L_cholesky # don't use the covariance_matrix prop, use the scale_tril one, much better!
