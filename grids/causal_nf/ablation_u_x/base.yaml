@@ -57,9 +57,6 @@ dataset:
   steps: [
     5
   ]
-  
-# base_distribution:
-#   correlations: [ {"0_1": 1.0, "1_3": 0.4}, {"0_1": 1.0, "1_3": 0.7}]
 model:
   name: [ causal_nf ]
   layer_name: [ maf ]

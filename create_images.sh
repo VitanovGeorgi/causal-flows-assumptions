@@ -12,7 +12,7 @@ for metric in "${arr[@]}"
  do
 
     python plot_aggregated_results.py \
-    --source=output_causal_nf/aggregated_results/results_chain \
+    --source=output_causal_nf/aggregated_results/results_chain_5 \
      --metric $metric \
     #   --affected_var 2,3 
 

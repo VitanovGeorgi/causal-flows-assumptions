@@ -22,7 +22,7 @@ import seaborn
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--source", help="file path to experiments", 
-    default="output_causal_nf/aggregated_results/results_chain"
+    default="output_causal_nf/aggregated_results/results_chain_3"
 )
 parser.add_argument("--target", help="output file path", default="output_aggregated_results")
 parser.add_argument("--metric", help="output file path", default="log_prob")

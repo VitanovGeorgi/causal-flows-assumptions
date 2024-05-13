@@ -17,7 +17,7 @@ import causal_nf.utils.io as causal_io
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--source", help="file path to experiments", default="output_causal_nf/ablation_u_x")
+parser.add_argument("--source", help="file path to experiments", default="output_causal_nf/comparison_u_x")
 parser.add_argument("--target", help="output file path, please don't use the same as the source file, since that dir will be overwritten when the next experiment is run", default="output_causal_nf")
 parser.add_argument("--subtarget", help="name of aggregated output dir", default="aggregated_results")
 parser.add_argument("--name", help="name of aggregated output csv file", default="results")
@@ -89,30 +89,36 @@ if __name__ == "__main__":
     all_experiments_logs = dict()
     single_experiment = list()
     for root, dirs, files in os.walk(source_path):
-        if 'metrics.csv' in files:
-            single_metric = pd.read_csv(os.path.join(root, 'metrics.csv'))
-            difference_in_path = path_difference(root, source_path)
-            all_experiments_results[difference_in_path.parts[0]] = single_metric.iloc[-3:]
-        if 'config_local.yaml' in files:
-            cfg = read_yaml(os.path.join(root, 'config.yaml'))
-            difference_in_path = path_difference(root, source_path)
-            all_experiments_params[difference_in_path.parts[0]] = cfg
-        if 'logs.txt' in files:
-            txt_file = open(os.path.join(root, 'logs.txt'))
-            content = txt_file.readlines()
-            '''
-                We already know that the last three elements will be those three.
-            '''
-            test_pd = nested_dict_to_pd(json.loads(content[-1]))
-            val_pd = nested_dict_to_pd(json.loads(content[-2]))
-            train_pd = nested_dict_to_pd(json.loads(content[-3]))
-            difference_in_path = path_difference(root, source_path)
-            all_experiments_logs[difference_in_path.parts[0]] = pd.concat([train_pd.iloc[0], test_pd.iloc[0], val_pd.iloc[0]], axis=1).T
-
+        try:
+            if 'metrics.csv' in files:
+                single_metric = pd.read_csv(os.path.join(root, 'metrics.csv'))
+                difference_in_path = path_difference(root, source_path)
+                all_experiments_results[difference_in_path.parts[0]] = single_metric.iloc[-3:]
+            if 'config_local.yaml' in files:
+                cfg = read_yaml(os.path.join(root, 'config.yaml'))
+                difference_in_path = path_difference(root, source_path)
+                all_experiments_params[difference_in_path.parts[0]] = cfg
+            if 'logs.txt' in files:
+                txt_file = open(os.path.join(root, 'logs.txt'))
+                content = txt_file.readlines()
+                '''
+                    We already know that the last three elements will be those three.
+                '''
+                test_pd = nested_dict_to_pd(json.loads(content[-1]))
+                val_pd = nested_dict_to_pd(json.loads(content[-2]))
+                train_pd = nested_dict_to_pd(json.loads(content[-3]))
+                difference_in_path = path_difference(root, source_path)
+                all_experiments_logs[difference_in_path.parts[0]] = pd.concat([train_pd.iloc[0], test_pd.iloc[0], val_pd.iloc[0]], axis=1).T
+        except Exception as e:
+            continue
     # add the params columns to the results
     for key in all_experiments_logs.keys():
-        params_df = pd.DataFrame.from_dict(all_experiments_params[key], orient='index').T
-        all_experiments_logs[key] = pd.concat([all_experiments_logs[key], params_df], axis=1)
+        try:
+            params_df = pd.DataFrame.from_dict(all_experiments_params[key], orient='index').T
+            all_experiments_logs[key] = pd.concat([all_experiments_logs[key], params_df], axis=1)
+        except:
+            continue
+
         # all_experiments_logs[key]['base_distribution_name'] = all_experiments_params[key]['dataset'].get('base_distribution_name', None)
         # all_experiments_logs[key]['base_version'] = all_experiments_params[key]['dataset'].get('base_version', None)
         # all_experiments_logs[key]['correlations'] = all_experiments_params[key]['dataset'].get('correlations', None)[0]
@@ -137,7 +143,6 @@ if __name__ == "__main__":
 """
     log_prob, log_prob_true, mmd's, rmse_cf, kl_distance - observational distributions
 """
-
 
 
 

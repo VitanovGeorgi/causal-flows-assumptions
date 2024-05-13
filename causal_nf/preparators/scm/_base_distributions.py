@@ -78,7 +78,7 @@ def create_multivariate_normal_dist(
                 raise ValueError(f"{variances_pair[1]} needs to be a (int, float).")
 
             default_variance[variances_pair[0], variances_pair[0]] = variances_pair[1]
-
+    # pdb.set_trace()
     if correlations is not None:
         if not isinstance(correlations, list):
             raise ValueError(f"{correlations} needs to be a list(list).")
@@ -121,7 +121,7 @@ def create_multivariate_normal_dist(
         L_cholesky = torch.linalg.cholesky(torch.eye(no_nodes))
         return None
     print(f"Cholesky: {L_cholesky}")
-    assert False
+    
     return distr_dict[base_distribution_name.lower()](
             torch.zeros(no_nodes),
             scale_tril=L_cholesky # don't use the covariance_matrix prop, use the scale_tril one, much better!
