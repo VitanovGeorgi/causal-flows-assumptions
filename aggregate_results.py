@@ -15,9 +15,8 @@ import causal_nf.utils.io as causal_io
 
 
 
-
 parser = argparse.ArgumentParser()
-parser.add_argument("--source", help="file path to experiments", default="output_causal_nf/comparison_u_x")
+parser.add_argument("--source", help="file path to experiments", default="../Data/chain5/output_causal_nf/comparison_x_u")
 parser.add_argument("--target", help="output file path, please don't use the same as the source file, since that dir will be overwritten when the next experiment is run", default="output_causal_nf")
 parser.add_argument("--subtarget", help="name of aggregated output dir", default="aggregated_results")
 parser.add_argument("--name", help="name of aggregated output csv file", default="results")

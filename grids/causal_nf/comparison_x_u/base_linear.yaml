@@ -1,4 +1,4 @@
 dataset:
-  # name:  [chain, chain-4, chain-5, collider, fork, triangle ]
-  name:  [ chain ]
+  # name:  [chain, chain-4, chain-5, chain-5-clean, collider, fork, triangle ]
+  name:  [ chain-4 ]
   sem_name: [ linear ]

@@ -1,4 +1,4 @@
-seed: [ 423626, 737, 246,848, 24787 ]
+seed: [ 423626, 737, 246, 848, 24787 ] #, 42, 12, 9863, 4670, 11111 
 device: [ cpu ]
 root_dir: [ output_causal_nf/comparison_x_u ]
 dataset:
@@ -10,21 +10,25 @@ dataset:
   shuffle_train: [ True ]
   loss: [ default ]
   scale: [ default ]
-  num_samples: [ 25000 ]
+  num_samples: [ 50, 500, 2500, 25_000 ]
   base_version: [ 0 ]
   base_distribution_name: [ 'multivariatenormal' ]
-  correlations: [
-    [[0, 1, 1.0], [0, 2, 1.0]],
-    [[0, 2, 1.0]],
-    [[1, 2, 1.0]]
+  correlations: [ 
+    [[2, 3, 1.0]]
    ]
   means: [
-    [[0, 0.], [1, 0.], [2, 0.]]
+    [
+      [0, 0.], [1, 0.], [2, 0.], [3, 0.] #, [4, 0.]
+    ]
   ]
   variances: [
-    [[0, 1.], [1, 1.], [2, 1.]]
+    [
+      [0, 1.], [1, 1.], [2, 1.], [3, 1.] #, [4, 1.]
+    ]
   ]
-  steps: [ 5]
+  steps: [
+    5
+  ]
 model:
   name: [ causal_nf ]
   layer_name: [ maf ]

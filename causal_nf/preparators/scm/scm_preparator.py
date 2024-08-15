@@ -65,7 +65,7 @@ class SCMPreparator(TabularPreparator):
         )
         self.num_nodes = len(sem_fn.functions)
         
-        self.base_distribution = pu_dict[self.num_nodes](
+        self.base_distribution = pu_dict[self.num_nodes]( # data set
             base_distribution_name=base_distribution_name, 
             correlations=correlations, 
             means = means,

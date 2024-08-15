@@ -14,6 +14,7 @@ from causal_nf.utils.optimizers import build_optimizer, build_scheduler
 
 plt.rcParams.update(bundles.icml2022())
 from causal_nf.utils.pairwise.mmd import maximum_mean_discrepancy
+from causal_nf.utils.pairwise.kl import kl2, compute_kl_div
 from causal_nf.modules.causal_nf import CausalNormalizingFlow
 
 import numpy as np
@@ -84,12 +85,13 @@ class CausalNFightning(BaseLightning):
         output = {}
         x = batch[0].to(self.device)
         n = x.shape[0]
+        # pdb.set_trace()
         with torch.enable_grad():
             log_prob_true = self.preparator.log_prob(x)
             output["log_prob_true"] = log_prob_true
-            print(f"log_prob_true: {log_prob_true.mean()} {log_prob_true.std()}")
-            print(f"x: {x.mean()} {x.std()}")
-            assert False
+            # print(f"log_prob_true: {log_prob_true.mean()} {log_prob_true.std()}")
+            # print(f"x: {x.mean()} {x.std()}")
+            # assert False
 
 
         tic = time.time()
@@ -119,10 +121,20 @@ class CausalNFightning(BaseLightning):
             log_q_with_x_sample = self.model.log_prob(
                 x_obs, scaler=self.preparator.scaler_transform
             )
-
+            
             kl_distance = (
                 log_p_with_x + log_q_with_x_sample - log_p_with_x_sample - log_prob
             )
+            # if kl_distance.mean() > 0:
+            #     pdb.set_trace()
+            #     print(f"kl_distance > 0: {kl_distance.mean()} {kl_distance.std()}")
+
+            if kl_distance.mean() < 0:
+                pdb.set_trace()
+                print(f"kl_distance < 0: {kl_distance.mean()} {kl_distance.std()}")
+
+            kl_distance[kl_distance < 0] = 0  
+            
             output["kl_distance"] = kl_distance
 
         if intervene:
@@ -283,7 +295,7 @@ class CausalNFightning(BaseLightning):
             counterfactual=False,
             ate=ate,
         )
-
+        # pdb.set_trace()
         log_dict = {}
 
         self.update_log_dict(

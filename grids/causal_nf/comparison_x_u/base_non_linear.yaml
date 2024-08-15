@@ -1,3 +1,0 @@
-dataset:
-  name:  [chain, fork, large-backdoor,  simpson, triangle ]
-  sem_name: [ non-linear ]

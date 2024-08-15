@@ -10,6 +10,7 @@ from .large_backdoor import LargeBackdoor
 from .german_credit import GermanCredit
 from .george_test import George_Test
 from .george_int import George_Int
+from .chain_5_clean import Chain5_Clean
 
 sem_dict = {}
 
@@ -25,3 +26,4 @@ sem_dict["large-backdoor"] = LargeBackdoor
 sem_dict["german"] = GermanCredit
 sem_dict["george_test"] = George_Test
 sem_dict["george_int"] = George_Int
+sem_dict["chain-5-clean"] = Chain5_Clean

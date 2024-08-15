@@ -109,12 +109,13 @@ def create_multivariate_normal_dist(
             
             if corr[2] < 0  or corr[2] > 1:
                 raise ValueError(f"{corr[2]} needs to be in interval [0, 1], as it is correlation coeff.")
-            
+            # pdb.set_trace()
             default_variance[corr[0], corr[1]] = corr[2] * default_variance[corr[0], corr[0]] * default_variance[corr[1], corr[1]]
             default_variance[corr[1], corr[0]] = corr[2] * default_variance[corr[0], corr[0]] * default_variance[corr[1], corr[1]]
 
     print(default_variance)
-    # pdb.set_trace()
+    # if corr[2] > 0.7:
+    #     pdb.set_trace()
     try:
         L_cholesky = torch.linalg.cholesky(default_variance)
     except:

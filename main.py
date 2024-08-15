@@ -126,6 +126,7 @@ if load_model:
         model.eval()
         model.save_dir = dirpath
         ckpt_name = preparator.get_ckpt_name(ckpt_file)
+        pdb.set_trace()
         for i, loader_i in enumerate(loaders):
             s_name = preparator.split_names[i]
             causal_nf_io.print_info(f"Testing {s_name} split")
@@ -139,9 +140,10 @@ if load_model:
                 root=trainer.logger.save_dir,
             )
 
+# model.model.sample((n,)) to sample the NF here
 
 else:
-
+    pdb.set_trace()
     ckpt_name_list = ["last"]
     if cfg.early_stopping.activate:
         ckpt_name_list.append("best")
@@ -159,7 +161,7 @@ else:
                 {s_name: metrics_stats, "epoch": ckpt_name},
                 root=trainer.logger.save_dir,
             )
-
+    pdb.set_trace()
     run.finish()
     if args.delete_ckpt:
         for f in glob.iglob(os.path.join(logger.save_dir, "*.ckpt")):

@@ -169,7 +169,7 @@ def load_normalizing_flow(cfg, preparator, ckpt_file=None):
                 hidden_features=hidden_features,
                 adjacency=adjacency,
                 base_to_data=base_to_data, # generative or abductive
-                base_distr=base_distr,
+                base_distr=base_distr, # base distribution for NF
                 learn_base=learn_base,
                 activation=activation,
             )
