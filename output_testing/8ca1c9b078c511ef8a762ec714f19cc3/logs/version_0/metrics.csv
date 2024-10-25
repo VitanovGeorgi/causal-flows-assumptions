@@ -1,0 +1,2 @@
+log_prob_true,time_log_prob,loss,log_prob,val_log_prob_true,val_time_log_prob,val_loss,val_log_prob,val_loss_jacobian_x,val_loss_jacobian_u,epoch,step
+-4.905817985534668,15.810729026794434,5.820647716522217,-5.820647716522217,-4.905817985534668,30.892902374267578,5.820647716522217,-5.820647716522217,1.0191352367401123,nan,0,12

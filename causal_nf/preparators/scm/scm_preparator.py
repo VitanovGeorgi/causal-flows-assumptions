@@ -242,7 +242,7 @@ class SCMPreparator(TabularPreparator):
             raise NotImplementedError(f"Type {self.type} not implemented")
 
 
-    def _data_loader(self, dataset, batch_size, shuffle, num_workers=0):
+    def _data_loader(self, dataset, batch_size, shuffle, num_workers=0, collate_fn=None):
         if self.type == "torch":
             return tdata.DataLoader(
                 dataset,
@@ -250,6 +250,7 @@ class SCMPreparator(TabularPreparator):
                 shuffle=shuffle,
                 num_workers=num_workers,
                 pin_memory=False,
+                collate_fn=collate_fn
             )
         elif self.type == "pyg":
             return pygdata.DataLoader(
@@ -258,6 +259,7 @@ class SCMPreparator(TabularPreparator):
                 shuffle=shuffle,
                 num_workers=num_workers,
                 pin_memory=False,
+                collate_fn=collate_fn
             )
 
     def get_intervention_list_2(self):
@@ -343,6 +345,9 @@ class SCMPreparator(TabularPreparator):
         return int_list
 
     def intervene(self, index, value, shape):
+        """ So if we do intervene before sample, we get samples from the intervened distribution.
+        But if we do sample before intervene, we get samples from the original distribution.        
+        """
         self.scm.intervene(index, value)
         x_int = self.scm.sample(shape)
         self.scm.stop_intervening(index)

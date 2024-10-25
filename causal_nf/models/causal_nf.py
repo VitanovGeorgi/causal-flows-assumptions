@@ -88,6 +88,7 @@ class CausalNFightning(BaseLightning):
         # pdb.set_trace()
         with torch.enable_grad():
             log_prob_true = self.preparator.log_prob(x)
+            # log_prob_true = self.preparator.confounded_log_prob(x, x)
             output["log_prob_true"] = log_prob_true
             # print(f"log_prob_true: {log_prob_true.mean()} {log_prob_true.std()}")
             # print(f"x: {x.mean()} {x.std()}")
@@ -130,7 +131,7 @@ class CausalNFightning(BaseLightning):
             #     print(f"kl_distance > 0: {kl_distance.mean()} {kl_distance.std()}")
 
             if kl_distance.mean() < 0:
-                pdb.set_trace()
+                # pdb.set_trace()
                 print(f"kl_distance < 0: {kl_distance.mean()} {kl_distance.std()}")
 
             kl_distance[kl_distance < 0] = 0  
@@ -277,6 +278,8 @@ class CausalNFightning(BaseLightning):
         return loss_dict
 
     def validation_step(self, batch, batch_idx):
+        """ batch and batch_idx are just partitions of self.preparator.datasets[1] (0 - train, 1 - val, 2 - test)
+        """
         self.eval()
 
         if self.current_epoch % 10 == 1:

@@ -22,10 +22,10 @@ import seaborn
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--source", help="file path to experiments", 
-    default="output_causal_nf/aggregated_results/results_chain_3"
+    default="output_causal_nf/aggregated_results/results_chain5_clean_models_1q"
 )
 parser.add_argument("--target", help="output file path", default="output_aggregated_results")
-parser.add_argument("--metric", help="output file path", default="log_prob")
+parser.add_argument("--metric", help="output file path", default="kl_distance")
 # keep in mind it'll be read as the default is, it's not there because we think it's better this way!
 parser.add_argument("--affected_var", help="which nodes are affected by correlation", default=["1", "2"], nargs="+") 
 
@@ -102,6 +102,8 @@ if __name__ == "__main__":
     metric = args.metric
 
     merged_df = pd.read_csv(source_path)
+    # ['gnn2__dim_inner', 'gnn__dim_inner', 'model__dim_inner'] so to distinguish them, we'll rename them
+    merged_df = merged_df.rename(columns={'model__dim_inner' : 'model__dim_inner_model'})
     # keep in mind that the way this file was saved, dataset__{} is still there, etc, so these will be removed
     merged_df = unflatten_column_names(merged_df)
 
@@ -118,6 +120,7 @@ if __name__ == "__main__":
     variable = 'mmd_int_x1=50p'
     strength_values = df_filtered['p'].unique()
 
+    # df_filtered = merged_df
     # pdb.set_trace()
     assert metric in df_filtered.columns, f"{metric} is not in the columns of the dataframe"
 
@@ -186,6 +189,8 @@ if __name__ == "__main__":
     marker_border = itertools.cycle(["r", "b", "g", "m", "y", "c", "k"])
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111)
+    _x_axis_metric = 'dim_inner_model'
+
     for split in df_filtered['split'].unique():
         marker = next(markers)
         for seed in df_filtered['seed'].unique():
@@ -198,7 +203,7 @@ if __name__ == "__main__":
                         (df_filtered['num_samples'] == num_samples) & 
                         (df_filtered['seed'] == seed) &
                         (df_filtered['split'] == split)
-                    ]['p'], 
+                    ][_x_axis_metric], 
                     df_filtered.loc[
                         (df_filtered['num_samples'] == num_samples) & 
                         (df_filtered['seed'] == seed) &
@@ -210,13 +215,13 @@ if __name__ == "__main__":
                     edgecolors=marker_border_color
                 )
         y = []
-        for p in sorted(df_filtered['p'].unique()):
+        for p in sorted(df_filtered[_x_axis_metric].unique()):
             y.append(df_filtered.loc[
                 # (df_filtered['num_samples'] == num_samples) & 
-                (df_filtered['p'] == p) & 
+                (df_filtered[_x_axis_metric] == p) & 
                 (df_filtered['split'] == split)
             ][metric].mean())
-        ax.plot(sorted(df_filtered['p'].unique()), y, color=next(colors), label=f"split: {split}", linestyle='--')
+        ax.plot(sorted(df_filtered[_x_axis_metric].unique()), y, color=next(colors), label=f"split: {split}", linestyle='--')
         ax.set_xlabel('Correlation strength')
         ax.xaxis.tick_top()
         ax.xaxis.set_label_position('top')
@@ -232,8 +237,8 @@ if __name__ == "__main__":
     # plt.show()
     ax.legend(prop={'size': 8}, bbox_to_anchor=(0.5, -0.05), loc='upper center', ncol=2)
     figure_name = os.path.join(target_path, f"{df_filtered['name'].iloc[0][0]}_metric_{metric}_affected_var_{variables[0]}_{variables[1]}.png")
-    fig.savefig(figure_name, dpi=499)
-    # plt.show()
+    # fig.savefig(figure_name, dpi=499)
+    plt.show()
     x = 0
 
 

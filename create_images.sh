@@ -13,8 +13,8 @@ for metric in "${arr[@]}"
  do
 
     python plot_aggregated_results_v2.py \
-    --source=output_causal_nf/aggregated_results/results_num_samples_chain_3_2024-07-12 \
-    --target=output_aggregated_results/chain_3_num_samples \
+    --source=output_causal_nf/aggregated_results/results_chain_2024-09-14 \
+    --target=output_aggregated_results/chain \
     --metric $metric \
     --split test 
     #   --affected_var 1,2 1,3 1,4 1,2,1,3 1,2,1,4 1,3,1,4 1,2,1,3,1,4

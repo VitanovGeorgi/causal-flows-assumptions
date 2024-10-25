@@ -169,9 +169,11 @@ class BaseDatasetPreparator(ABC):
                 if i != idx:
                     datasets[i] = datasets[idx]
         datasets = self._transform_after_split(datasets)
-        # pdb.set_trace()
         self.datasets = datasets
         if return_data:
+            """ This will return the full dataset [0.8, 0.1, 0.1], not the split one.
+            Also if you ask for X_full and U_full, it will return with the hidden confounders.
+            """
             return torch.cat([datasets[i].X for i in range(len(datasets))], dim=0), \
                   torch.cat([datasets[i].U for i in range(len(datasets))], dim=0)
         return
@@ -285,6 +287,8 @@ class BaseDatasetPreparator(ABC):
         return ckpt_name
 
     def get_dataloader_train(self, batch_size, num_workers=0, shuffle=None):
+        """ We can access load_train.dataset
+        """
         assert isinstance(self.datasets, list)
         # pdb.set_trace()
         dataset = self.datasets[0]

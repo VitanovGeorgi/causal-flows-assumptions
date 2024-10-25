@@ -1,0 +1,51 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.8.18",
+    "heartbeatAt": "2024-06-03T08:56:35.935290",
+    "startedAt": "2024-06-03T08:56:35.872791",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--config_file",
+        "grids/causal_nf/comparison_x_u/base/configs/1/config_6.yaml",
+        "--wandb_mode",
+        "offline",
+        "--wandb_group",
+        "comparison_x_u",
+        "--project",
+        "Test"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "git@github.com:VitanovGeorgi/causal-flows-assumptions.git",
+        "commit": "844c937a5cc8e6b7befd3ae15855439e231d05f4"
+    },
+    "email": "vitanovgeorgi.gv@gmail.com",
+    "root": "/Users/georgivitanov/Desktop/Thesis/causal-flows-assumptions",
+    "host": "usg-vpn-pool-06.sb.dfki.de",
+    "username": "georgivitanov",
+    "executable": "/Users/georgivitanov/opt/anaconda3/envs/cnf/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2400,
+        "min": 2400,
+        "max": 2400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400,
+            "min": 2400,
+            "max": 2400
+        }
+    ],
+    "disk": {
+        "total": 460.4317207336426,
+        "used": 412.99953842163086
+    },
+    "memory": {
+        "total": 16.0
+    }
+}

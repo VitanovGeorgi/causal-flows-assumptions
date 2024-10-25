@@ -1,1 +1,1 @@
-from .causal_transform import CausalTransform, CausalEquations
+from .causal_transform import CausalTransform, CausalEquations, ConfoundedCausalEquations

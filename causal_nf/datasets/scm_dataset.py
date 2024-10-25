@@ -22,6 +22,7 @@ class SCMDataset(Dataset):
         name: str,
         sem_name: str,
         type: str = "torch",
+        hidden_vars: list = [],
         use_edge_attr: bool = False,
         seed: int = None,
     ):
@@ -29,6 +30,8 @@ class SCMDataset(Dataset):
         self.root_dir = root_dir
         self.name = name
         self.sem_name = sem_name
+
+        self.hidden_vars = hidden_vars
 
         sem_fn = sem_dict[name](sem_name=sem_name)
         self.adjacency = sem_fn.adjacency(True)
@@ -44,20 +47,31 @@ class SCMDataset(Dataset):
         self.X = None
         self.U = None
 
-    def _create_data(self):
+        self.X_full = None
+        self.U_full = None
+
+    def _remaining_vars(self) -> list:
+        return [i for i in range(self.num_nodes) if i not in self.hidden_vars]
+
+    def _create_data(self, include_hidden: bool = False):
         """
-        This method sets the value for self.X and self.U
+        This method sets the value for self.X and self.U.
+        Even with confounded preparator, it'll sample the whole data
         Returns: None
 
         """
-        # pdb.set_trace()
         U = self.scm.base_dist.sample((self.num_samples,))
         X = self.scm.transform(U)
 
-        return X, U
+        self.X_full = X
+        self.U_full = U
+        if include_hidden:
+            return X, U
+        remaining_vars = self._remaining_vars()
+        return X[:, remaining_vars], U[:, remaining_vars]
 
     def prepare_data(self) -> None:
-        # print(f"\nPreparing data...")
+        # creates the data - here it's where we first remove the hidden variables
         X, U = self._create_data()
 
         self.X = X
@@ -78,6 +92,9 @@ class SCMDataset(Dataset):
 
     def __getitem__(self, index):
         if self.type == "torch":
+            # CHANGES!!!
+            if self.X.shape[1] == 4:
+                pass
             return self.X[index], self.U[index]
         elif self.type == "pyg":
             attr_dict = {}

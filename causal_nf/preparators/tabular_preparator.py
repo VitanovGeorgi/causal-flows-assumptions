@@ -35,6 +35,10 @@ def plot_tabular(
     if isinstance(title_elem_idx, int):
         title_el = batch[title_elem_idx]
 
+    # delete
+    import matplotlib as mpl
+    mpl.rcParams.update(mpl.rcParamsDefault)
+
     g = sns.PairGrid(df, diag_sharey=False, hue=hue)
     sns.set(font_scale=1.5)
     sns.set(style="white", rc={"axes.grid": False})
@@ -103,13 +107,14 @@ class TabularPreparator(BaseDatasetPreparator):
         else:
             return [f"x_{i + 1}" for i in range(self.x_dim())]
 
-    def _data_loader(self, dataset, batch_size, shuffle, num_workers=0):
+    def _data_loader(self, dataset, batch_size, shuffle, num_workers=0, collate_fn=None):
         return DataLoader(
             dataset,
             batch_size=batch_size,
             shuffle=shuffle,
             num_workers=num_workers,
             pin_memory=False,
+            collate_fn=collate_fn
         )
 
     def create_df(self, x_list, name_list=None):

@@ -13,7 +13,7 @@ class SCM(TransformedDistribution):
 
     @property
     def transform(self) -> CausalTransform:
-        return self.transforms[0]
+        return self.transforms[0] # self.transforms:list[CausalEquations] of len == 1 usually
 
     def intervene(self, index, value):
         self.transform.intervene(index, value)

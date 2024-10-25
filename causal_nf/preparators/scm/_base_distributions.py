@@ -4,7 +4,7 @@ import torch
 import torch.distributions as distr
 
 from causal_nf.distributions.heterogeneous import Heterogeneous
-from torch.distributions import Independent, Normal, Uniform, Laplace, Bernoulli
+from torch.distributions import Independent, Normal, Uniform, Laplace, Bernoulli, Beta
 
 pu_dict = {}
 
@@ -115,7 +115,7 @@ def create_multivariate_normal_dist(
 
     print(default_variance)
     # if corr[2] > 0.7:
-    #     pdb.set_trace()
+    # pdb.set_trace()
     try:
         L_cholesky = torch.linalg.cholesky(default_variance)
     except:
@@ -495,7 +495,14 @@ def base_distribution_9_nodes(base_distribution_name, correlations, means, varia
 
     return p_u
 
+def base_distribution_x_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 0:
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+    else:
+        raise NotImplementedError(f"Version {base_version} of p_u not implemented.")
+    return p_u
 
+pu_dict[2] = base_distribution_x_nodes
 pu_dict[3] = base_distribution_3_nodes
 pu_dict[4] = base_distribution_4_nodes
 pu_dict[5] = base_distribution_5_nodes

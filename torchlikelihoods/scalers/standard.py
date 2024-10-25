@@ -41,6 +41,8 @@ class StandardScaler(BaseScaler):
         self.scale_ = 1.0
 
     def _transform(self, x, inplace):
+        if x.shape[1] != self.mu_.shape[1]:
+            x = torch.cat((x[:, 0:2], x[:, 3:]), dim=1)
         return (x - self.mu_) / self.scale_
 
     def _inverse_transform(self, x_norm, inplace):

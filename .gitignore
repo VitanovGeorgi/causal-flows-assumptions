@@ -95,3 +95,6 @@ target/
 
 # Images
 *.png
+
+# Wand files
+*.wandb

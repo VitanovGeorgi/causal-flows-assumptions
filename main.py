@@ -44,7 +44,7 @@ else:
     from causal_nf.preparators.scm import SCMPreparator
     # pdb.set_trace()
     preparator = SCMPreparator.loader(cfg.dataset)
-preparator.prepare_data()
+X_og, U_og = preparator.prepare_data(True)
 # pdb.set_trace()
 loaders = preparator.get_dataloaders(
     batch_size=cfg.train.batch_size, num_workers=cfg.train.num_workers
@@ -60,6 +60,7 @@ config["param_count"] = param_count
 config["node_count"] = model.model.adjacency.shape[0] 
 # pdb.set_trace()
 if not load_model:
+    # args.project = "CAUSAL_NF" # delete
     assert isinstance(args.project, str)
     run = wandb.init(
         mode=args.wandb_mode,
@@ -104,6 +105,7 @@ causal_nf_io.print_info(f"Experiment folder: {logger.save_dir}\n\n")
 wandb_local.log_config(dict(config), root=logger.save_dir)
 
 if not load_model:
+    # args.config_file = "grids/causal_nf/comparison_x_u/base/configs/1/config_4.yaml" # delete
     wandb_local.copy_config(
         config_default=causal_nf_config.DEFAULT_CONFIG_FILE,
         config_experiment=args.config_file,
@@ -143,7 +145,7 @@ if load_model:
 # model.model.sample((n,)) to sample the NF here
 
 else:
-    pdb.set_trace()
+    # pdb.set_trace()
     ckpt_name_list = ["last"]
     if cfg.early_stopping.activate:
         ckpt_name_list.append("best")
@@ -167,5 +169,5 @@ else:
         for f in glob.iglob(os.path.join(logger.save_dir, "*.ckpt")):
             causal_nf_io.print_warning(f"Deleting {f}")
             os.remove(f)
-
+pdb.set_trace()
 print(f"Experiment folder: {logger.save_dir}")

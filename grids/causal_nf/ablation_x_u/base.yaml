@@ -10,8 +10,9 @@ dataset:
   shuffle_train: [ True ]
   loss: [ default ]
   scale: [ default ]
-  num_samples: [ 25000 ]
-  base_version: [ 1 ]
+  num_samples: [ 500 ]
+  base_version: [ 0 ]
+  
 model:
   name: [ causal_nf ]
   layer_name: [ maf ]

@@ -1,0 +1,3 @@
+{"val": {"log_prob_true": -2.842245578765869, "time_log_prob": 240.15139770507812, "loss": 4.919302940368652, "log_prob": -4.919302940368652, "loss_jacobian_x": 0.003160854335874319, "loss_jacobian_u": NaN}, "epoch": 0, "timestamp": 1727341694}
+{"val": {"log_prob_true": -2.842245578765869, "time_log_prob": 4.868507385253906, "loss": 4.863937854766846, "log_prob": -4.863937854766846, "loss_jacobian_x": 0.0037167060654610395, "loss_jacobian_u": NaN}, "epoch": 0, "timestamp": 1727341694}
+{"train": {"loss": 4.513597011566162, "log_prob": -4.513597011566162, "time_forward": 2.0159482955932617, "loss_jacobian_x": 0.003325683530420065, "loss_jacobian_u": NaN, "lr": 0.001}, "epoch": 0, "timestamp": 1727341694}
