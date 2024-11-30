@@ -3,26 +3,26 @@ root_dir: output_testing
 seed: 2
 dataset:
   root: ../Data
-  name: chain-confounded
-  sem_name: non-linear-additive-0123 # non-linear #non-additive
+  name: chain-2
+  sem_name: linear-functional # non-linear #non-additive
   splits: [ 0.8, 0.1, 0.1 ]
   k_fold: 1
   shuffle_train: True
   loss: default
   scale: default
-  num_samples: 2500
+  num_samples: 25000
   base_version: 0 # dgfh
   output_plot_metrics: output_metrics
   base_distribution_name: MultivariateNormal # ['Normal', 'Uniform', 'Bernoulli', 'Laplace', 'MultivariateNormal', 'Custom']
   # don't have it as dict, it crashes with some assertions at cfg.merge_from_file(config_file)
   # enter in the form i, j, value, we are counting from 0 btw (node-wise)
   # correlations: [[0, 1, 1.], [1, 3, 1.], [1, 2, 1.]] 
-  means: [[0, 0.], [1, 0.], [2, 0.], [3, 0.]] 
-  variances: [[0, 1.], [1, 1.], [2, 1.], [3, 1.]]
-  bernoulli_coef: [0.5, 0.5, 0.5, 0.5]
-  uniform_a: [1, 2, 4, 5]
-  uniform_b: [2, 3, 5, 6]
-  correlations: [[0, 1, 0]]
+  means: [[0, 0.], [1, 2.]]
+  variances: [[0, 2.], [1, 1.]]
+  bernoulli_coef: [0.5, 0.5, 0.5]
+  uniform_a: [1, 2, 4]
+  uniform_b: [2, 3, 5]
+  correlations: [[0, 1, 0.]]
   multiple_distributions: [
     ['Normal', 0, 1],
     # ['Bernoulli', 0.7],
@@ -30,13 +30,13 @@ dataset:
     # ['Laplace', 0, 1],
     # ['Uniform', 0, 1]
   ]  
-  steps: 1
+  # steps: -1 # plays no role here
   hidden_vars: [0]
   num_hidden: 1
 model:
   name: causal_nf
   layer_name: maf
-  dim_inner: [32, 32]
+  dim_inner: [16, 16, 16]
   num_layers: 1
   init: None
   act: elu
@@ -46,7 +46,7 @@ model:
   learn_base: False
   plot: False
 train:
-  max_epochs: 100
+  max_epochs: 10
   regularize: False
   kl: forward  # backward
   batch_size: 4096
@@ -57,7 +57,7 @@ train:
   inference_mode: False
 optim:
   optimizer: adam
-  base_lr: 0.001
+  base_lr: 0.01
   beta_1: 0.9
   beta_2: 0.999
   momentum: 0.0

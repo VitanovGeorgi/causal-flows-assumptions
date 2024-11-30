@@ -13,14 +13,20 @@ from .george_int import George_Int
 from .chain_5_clean import Chain5_Clean
 from .weird_chain import Weird_chain
 from .chain_confounded import ChainConfounded
+from .chain_assumed import ChainAssumed
+from .chain_2 import Chain2
+from .triangle_3 import Triangle3
 
 sem_dict = {}
 
 sem_dict["chain"] = Chain
 sem_dict["chain-confounded"] = ChainConfounded
+sem_dict["chain-assumed"] = ChainAssumed
+sem_dict["chain-2"] = Chain2
 sem_dict["chain-4"] = Chain4
 sem_dict["chain-5"] = Chain5
 sem_dict["triangle"] = Triangle
+sem_dict["triangle-3"] = Triangle3
 sem_dict["collider"] = Collider
 sem_dict["fork"] = Fork
 sem_dict["diamond"] = Diamond

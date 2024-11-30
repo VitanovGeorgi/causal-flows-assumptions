@@ -1,1 +1,0 @@
-{"train": {"loss": 5.035438537597656, "log_prob": -5.035438537597656, "time_forward": 1089.27490234375, "loss_jacobian_x": 0.0, "loss_jacobian_u": NaN, "lr": 0.001}, "epoch": 0, "timestamp": 1726600053}

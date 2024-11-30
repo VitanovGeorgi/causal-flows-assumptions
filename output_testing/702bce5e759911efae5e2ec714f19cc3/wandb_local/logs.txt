@@ -1,1 +1,0 @@
-{"val": {"log_prob_true": -254.09068298339844, "time_log_prob": 1076.5791015625, "loss": 8.899698257446289, "log_prob": -8.899698257446289, "loss_jacobian_x": 0.0, "loss_jacobian_u": NaN}, "epoch": 0, "timestamp": 1726648852}

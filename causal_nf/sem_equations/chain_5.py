@@ -22,6 +22,15 @@ class Chain5(SEM):
                 lambda _1, _2, x3, x4: x4 - x3,
                 lambda _1, _2, _3, x4, x5: x5 + x4,
             ]
+        elif sem_name == "non-linear":
+            functions = [
+                lambda u1: u1,
+                lambda x1, u2: torch.exp(x1 / 2.0) + u2 / 4.0,
+            ]
+            inverses = [
+                lambda x1: x1,
+                lambda x1, x2: 4.0 * (x2 - torch.exp(x1 / 2.0)),
+            ]
         super().__init__(functions, inverses, sem_name)
 
     def adjacency(self, add_diag=False):

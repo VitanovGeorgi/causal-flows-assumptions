@@ -93,8 +93,10 @@ target/
 # Mypy cache
 .mypy_cache/
 
-# Images
-*.png
+# Metrics
+*.csv
 
 # Wand files
 *.wandb
+*.json
+
