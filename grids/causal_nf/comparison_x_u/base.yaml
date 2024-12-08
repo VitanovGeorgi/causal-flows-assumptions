@@ -1,6 +1,6 @@
-seed: [ 423626, 737, 246,848, 24787 ]
+seed: [ 423626, 737, 246, 848, 24787, 42, 12, 9863, 4670, 11111 ]
 device: [ cpu ]
-root_dir: [ output_causal_nf/comparison_x_u ]
+root_dir: [ output_causal_nf/comparison_x_u/chain-2-rq-2-1 ]
 dataset:
   name: 'TODO'
   sem_name: 'TODO'
@@ -11,11 +11,24 @@ dataset:
   loss: [ default ]
   scale: [ default ]
   num_samples: [ 25000 ]
-  base_version: [ 1 ]
+  base_version: [ 0 ]
+  base_distribution_name: [ 'multivariatenormal' ]
+  # uniform_a: [[1, 2, 4, 5]]
+  # uniform_b: [[2, 3, 5, 6]]
+  correlations: [ [[0, 1, 1.0]]]
+  means: [
+    [[0, 0.], [1, 2.]]
+  ]
+  variances: [
+    [[0, 2.], [1, 1.]]
+  ]
+  steps: [
+    10
+  ]
 model:
   name: [ causal_nf ]
   layer_name: [ maf ]
-  dim_inner: [ [ 16, 16, 16 , 16 ],  [ 32, 32, 32 ],  [ 16, 16, 16 ],   [ 32, 32 ],  [ 32 ] , [ 64 ] ]
+  dim_inner: [ [ 16, 16, 16 ] ]
   num_layers: [ 1 ]
   init: [ None ]
   act: [ elu ]
@@ -36,7 +49,7 @@ early_stopping:
   verbose: [ False ]
 optim:
   optimizer: [ adam ]
-  base_lr: [ 1e-3 ]
+  base_lr: [ 1e-2 ]
   beta_1: [ 0.9 ]
   beta_2: [ 0.999 ]
   momentum: [ 0.0 ]

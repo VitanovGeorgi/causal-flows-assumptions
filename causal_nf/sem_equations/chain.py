@@ -18,6 +18,17 @@ class Chain(SEM):
                 lambda x1, x2: (10 * x1 - x2),
                 lambda x1, x2, x3: (x3 - 0.25 * x2) / 2,
             ]
+        elif sem_name == "linear-ones":
+            functions = [
+                lambda u1: u1,
+                lambda x1, u2: x1 + u2,
+                lambda x1, x2, u3: x2 + u3,
+            ]
+            inverses = [
+                lambda x1: x1,
+                lambda x1, x2: x2 - x1,
+                lambda _, x2, x3: x3 - x2,
+            ]
         elif sem_name == "non-linear":
             functions = [
                 lambda u1: u1,

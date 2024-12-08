@@ -9,7 +9,10 @@ from causal_nf.config import cfg
 import causal_nf.utils.io as causal_nf_io
 
 import pdb
+import datetime
 
+now = datetime.datetime.now()
+print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! START: {now} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 os.environ["WANDB_NOTEBOOK_NAME"] = "name_of_the_notebook"
 

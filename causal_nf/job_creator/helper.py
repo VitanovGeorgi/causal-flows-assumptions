@@ -50,18 +50,20 @@ def generate_options_v2(grid_flat: dict, correlations: str = 'correlations', ste
     """
     output = []
     for i in range(len(options)):
-        # pdb.set_trace()
         _steps = options[i][steps_idx]
-        for s in range(_steps + 1):
+        if _steps != 0:
+            for s in range(_steps + 1):
+                _option = copy.deepcopy(options[i]) 
+                for j, elem in enumerate(options[i][corr_idx]):
+                    """
+                        Individual correlations are here. Let's assume it's just normal pdfs
+                    """
+                    _option[corr_idx][j][-1] = round(options[i][corr_idx][j][-1] * s / _steps, 4)
+                
+                output.append(_option)
+        else:
             _option = copy.deepcopy(options[i]) 
-            for j, elem in enumerate(options[i][corr_idx]):
-                """
-                    Individual correlations are here. Let's assume it's just normal pdfs
-                """
-                _option[corr_idx][j][-1] = round(options[i][corr_idx][j][-1] * s / _steps, 4)
-            
             output.append(_option)
-        
     # pdb.set_trace()
     return output
 

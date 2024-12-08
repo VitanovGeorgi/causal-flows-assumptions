@@ -92,3 +92,18 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# Checkpoints
+.ckpt
+*.ckpt
+
+# Metrics
+*.csv
+
+# Wand files
+*.wandb
+*.json
+
+# Configs
+*.yaml
+*.sh

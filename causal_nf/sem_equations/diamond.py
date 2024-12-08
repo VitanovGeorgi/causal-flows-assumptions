@@ -8,8 +8,18 @@ class Diamond(SEM):
         functions = None
         inverses = None
         if sem_name == "linear":
-            functions = None
-            inverses = None
+            functions = [
+                lambda u1: u1,
+                lambda x1, u2: x1 + u2,
+                lambda x1, x2, u3: x1 + x2 + u3,
+                lambda _, x2, x3, u4: x2 + x3 + u4,
+            ]
+            inverses = [
+                lambda x1: x1,
+                lambda x1, x2: x2 - x1,
+                lambda x1, x2, x3: x3 - x2 - x1,
+                lambda _, x2, x3, x4: x4 - x3 -x2,
+            ]
         elif sem_name == "non-linear":
             functions = [
                 lambda u1: u1,

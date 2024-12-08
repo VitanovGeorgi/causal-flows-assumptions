@@ -27,7 +27,7 @@ class George_Int(SEM):
     def adjacency(self, add_diag=False):
         dim = len(self.inverses)
         adj = torch.zeros((dim, dim))
-
+        # which nodes are parents to the select node
         adj[0, :] = torch.tensor([0, 0, 0, 0, 0])
         adj[1, :] = torch.tensor([1, 0, 0, 0, 0])
         adj[2, :] = torch.tensor([0, 1, 0, 0, 0])

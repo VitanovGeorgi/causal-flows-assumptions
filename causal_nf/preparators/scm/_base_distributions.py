@@ -4,7 +4,7 @@ import torch
 import torch.distributions as distr
 
 from causal_nf.distributions.heterogeneous import Heterogeneous
-from torch.distributions import Independent, Normal, Uniform, Laplace, Bernoulli
+from torch.distributions import Independent, Normal, Uniform, Laplace, Bernoulli, Beta
 
 pu_dict = {}
 
@@ -475,6 +475,63 @@ def base_distribution_5_nodes(base_distribution_name, correlations, means, varia
     return p_u
 
 
+def base_distribution_6_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 1:
+        p_u = Independent(
+            Uniform(
+                1e-6,
+                torch.ones(9),
+            ),
+            1,
+        )
+
+    elif base_version == 0:
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+
+    elif base_version == 2:
+        raise NotImplementedError(f"Version {base_version} of p_u not implemented.")
+
+    return p_u
+
+
+def base_distribution_7_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 1:
+        p_u = Independent(
+            Uniform(
+                1e-6,
+                torch.ones(9),
+            ),
+            1,
+        )
+
+    elif base_version == 0:
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+
+    elif base_version == 2:
+        raise NotImplementedError(f"Version {base_version} of p_u not implemented.")
+
+    return p_u
+
+
+def base_distribution_8_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 1:
+        p_u = Independent(
+            Uniform(
+                1e-6,
+                torch.ones(9),
+            ),
+            1,
+        )
+
+    elif base_version == 0:
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+
+    elif base_version == 2:
+        raise NotImplementedError(f"Version {base_version} of p_u not implemented.")
+
+    return p_u
+
+
 def base_distribution_9_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
     if base_version == 1:
         p_u = Independent(
@@ -494,7 +551,84 @@ def base_distribution_9_nodes(base_distribution_name, correlations, means, varia
     return p_u
 
 
+def base_distribution_10_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 1:
+        p_u = Independent(
+            Normal(
+                torch.zeros(10),
+                torch.ones(10),
+            ),
+            1,
+        )
+    elif base_version == 2:
+        p_u = Independent(
+            Laplace(
+                torch.zeros(10),
+                torch.ones(10),
+            ),
+            1,
+        )
+    elif base_version == 3:
+        p_u = Independent(
+            Uniform(
+                torch.zeros(10),
+                torch.ones(10),
+            ),
+            1,
+        )
+    # elif base_version == 4:
+    #     p_u = distr.multivariate_normal.MultivariateNormal(
+    #         torch.tensor(
+    #             [0.3, 0.8, 0.9, 1.05, 1.2]
+    #         ),
+    #         torch.tensor([
+    #             [1.4, 0, 0.2, 0., 0.5],
+    #             [0., 1.1, 0., 0., 0.2],
+    #             [0., 0., 1.1, 0., 0.],
+    #             [0., 0., 0., 1.2, 0.],
+    #             [0., 0.4, 0., 0., 1.5]
+    #         ])
+    #     )
+
+    elif base_version == 0:
+        
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+        # p_u = Independent(
+        #     Normal(
+        #         torch.zeros(5),
+        #         torch.ones(5),
+        #     ),
+        #     1,
+        # )  
+        
+        
+
+    else:
+        p_u = Independent(
+            Normal(
+                torch.zeros(10),
+                torch.ones(10),
+            ),
+            1,
+        )  
+        
+
+    return p_u
+
+def base_distribution_x_nodes(base_distribution_name, correlations, means, variances, no_nodes, base_version=0, **kwargs):
+    if base_version == 0:
+        p_u = list_to_distr(base_distribution_name, correlations, means, variances, no_nodes=no_nodes, **kwargs)
+    else:
+        raise NotImplementedError(f"Version {base_version} of p_u not implemented.")
+    return p_u
+
+
+pu_dict[2] = base_distribution_x_nodes
 pu_dict[3] = base_distribution_3_nodes
 pu_dict[4] = base_distribution_4_nodes
 pu_dict[5] = base_distribution_5_nodes
+pu_dict[6] = base_distribution_6_nodes
+pu_dict[7] = base_distribution_7_nodes
+pu_dict[8] = base_distribution_8_nodes
 pu_dict[9] = base_distribution_9_nodes
+pu_dict[10] = base_distribution_10_nodes
